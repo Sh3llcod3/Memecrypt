@@ -117,7 +117,6 @@ $ ./memecrypt.py -d -i "String to be hashed" -r 32 -n 64 -q
 EA63C2Cd18faAaBaC13478fB8cCf84fAB779CDfd703A35DFf49Ff3949acCE48a
 ```
 # Strength
-This algorithm should be strong enough to keep out casual reposters. However any determined meme-stealer/cryptanalyst may be able to break this algorithm in less than 5 minutes. In such case, I recommend that you use `AES`.
+This algorithm should be strong enough to keep out casual reposters. However any determined meme-stealer/cryptanalyst may be able to break this algorithm in less than 5 minutes. In such case, I recommend that you use a real encryption algorithm like `AES`.
 
-
-![Hackerman](https://bit.ly/2v1xJSn)
+<img src="https://bit.ly/2v1xJSn" width="500px" height="500px">
