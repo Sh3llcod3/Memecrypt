@@ -1,7 +1,10 @@
 # Memecrypt
 Memecrypt is a recreational encryption tool for encrypting and sending messages and memes between your friends.
-
 It features a substitution cipher that is capable of encrypting and decrypting text based data from a string, an URL or a local file and a hash function that can hash input strings.
+
+![GitHub forks](https://img.shields.io/github/forks/Sh3llcod3/memecrypt.svg?style=for-the-badge&label=Fork)
+![GitHub stars](https://img.shields.io/github/stars/Sh3llcod3/memecrypt.svg?style=for-the-badge&label=Stars)
+![GitHub watchers](https://img.shields.io/github/watchers/Sh3llcod3/memecrypt.svg?style=for-the-badge&label=Watch)
 # Prerequisites
 - A GNU/Linux based OS (Tested on Ubuntu 16.04.4 LTS)
 - Bash or any other shell.
