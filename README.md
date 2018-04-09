@@ -8,8 +8,8 @@ It features a substitution cipher that is capable of encrypting and decrypting t
 # Prerequisites
 - A GNU/Linux based OS (Tested on Ubuntu 16.04.4 LTS)
 - Bash or any other shell.
-- Git installed
-- Python3 installed with these modules available: random, string, sys, traceback, time, base64, requests, binascii, codecs.
+- Git installed.
+- Python3 installed with the standard set of modules.
 # Usage
 Clone the repository, then mark the file as an executable with `$ chmod +x memecrypt.py`. No superuser privilages are required.
 To view all the supported arguments, simply type `$ ./memecrypt.py -h` to view all the help options.
