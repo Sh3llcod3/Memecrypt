@@ -106,7 +106,7 @@ $ ./memecrypt.py -d -i "String to be hashed" -r 32 -n 64
 
 [+] Hash: EA63C2Cd18faAaBaC13478fB8cCf84fAB779CDfd703A35DFf49Ff3949acCE48a
 [~] Rounds: 32
-[~] Length: 128
+[~] Length: 64
 [~] Input: String to be hashed
 [i] Hash computed in 0.0059 seconds.
 
