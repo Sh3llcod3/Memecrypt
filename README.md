@@ -1,5 +1,5 @@
 # Memecrypt
-Memecrypt is a recreational encryption tool for encrypting and sending messages and memes between your friends.
+Memecrypt is an encryption tool designed for recreational use, with the purpose of encrypting and sending messages and memes between your friends.
 It features a substitution cipher that is capable of encrypting and decrypting text based data from a string, an URL or a local file and a hash function that can hash input strings.
 
 ![GitHub forks](https://img.shields.io/github/forks/Sh3llcod3/Memecrypt.svg?style=for-the-badge&label=Fork)
@@ -98,7 +98,7 @@ $  ./memecrypt.py -s -x -f "./ascii_cat" -k "A cat has 9 lives"
 ```
 The `-s` flag specifies that we are selecting the substitution cipher, `-e` puts it in encrypt mode and `-x` puts it in decrypt mode. `-i` is used in encrypt mode to specify the plaintext and `-c` is used in decrypt mode to specify the cipher text. Regardless of mode the `-u` flag will get the data from the url before encrypting/decrypting it. Similarly, irrespective of mode, the `-f` argument will read a file and encrypt/decrypt data from it. The key needs to be specified with `-k` in all cases. When encrypted, the output will be in base64.
 
-In the first example, we are `encrypting` a string and then `decrypting` it. In the third and fourth examples we are getting data from a URL with `-u` and in the fourth example in particular, we are specifying that we only want the encrypted text with `-q`, which we are redirecting it to a file called `ascii_cat`. In the second-last example we are decrypting the contents of the `ascii_cat` file by specifying `-f`.
+In the first example, we are `encrypting` a string and then `decrypting` it. In the third and fourth examples we are getting data from a URL with `-u` and in the fourth example in particular, we are specifying that we only want the encrypted text with `-q`, which we are redirecting it to a file called `ascii_cat`. In the second-last example we are decrypting the contents of the `ascii_cat` file by specifying `-f`. Please note, that Memecrypt cannot encrypt/decrypt binary data yet. An update will address this issue down the line.
 ### Hash function
 This example below shows how to hash a string.
 ```bash
