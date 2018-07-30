@@ -1,122 +1,309 @@
 # Memecrypt
-Memecrypt is an encryption tool designed for recreational use, with the purpose of encrypting and sending messages and memes between your friends.
-It features a substitution cipher that is capable of encrypting and decrypting text based data from a string, an URL or a local file and a hash function that can hash input strings.
+
+Memecrypt is an encryption tool designed for recreational use,
+with the purpose of encrypting and sending messages and memes
+between your friends. It features a substitution cipher, designed
+and made completely from scratch, where text can be encrypted and
+decrypted with the same key from a variety of input sources.
+
+Memecrypt can be imported as a python module or used as a standalone
+program, depending on which is required.
 
 ![GitHub forks](https://img.shields.io/github/forks/Sh3llcod3/Memecrypt.svg?style=for-the-badge&label=Fork)
 ![GitHub stars](https://img.shields.io/github/stars/Sh3llcod3/Memecrypt.svg?style=for-the-badge&label=Stars)
 ![GitHub watchers](https://img.shields.io/github/watchers/Sh3llcod3/Memecrypt.svg?style=for-the-badge&label=Watch)
+
 # Prerequisites
-- A GNU/Linux based OS (Tested on Ubuntu 16.04.4 LTS)
-- Bash or any other shell.
-- Git installed.
-- Python3 installed with the standard set of modules.
+
+- A GNU/Linux based OS (Tested on: Ubuntu 16.04.4/Kali 2018.2)
+- Bash
+- Git
+- Python3 (pip3, requests)
+
 # Usage
-Clone the repository, then mark the file as an executable with `$ chmod +x memecrypt.py`. No superuser privilages are required.
-To view all the supported arguments, simply type `$ ./memecrypt.py -h` to view all the help options.
-Here's what the help screen looks like.
+
+There are 2 main ways to use memecrypt. Both the program
+and module usage is covered here.
+
+## Program usage
+
+To use this as a program, start by cloning the repository from GitHub.
+Then mark the file as an executable.
+
+```shell
+$ git clone https://github.com/Sh3llcod3/Memecrypt.git
+$ cd memecrypt/memecrypt/
+$ chmod +x memecrypt.py
 ```
- -h --help
-        Show this help screen and exit.
- -v --version
-        Print version information and exit.
- -s --substitution
-        Use the substitution cipher. Takes -i,-k,-u,-f,-c as valid args.
- -e --encrypt
-        Specify encrypt mode for -s. Needs -i if text is entered by hand.
- -x --decrypt
-        Specify decrypt mode for -s. Requires use of -c for entered text.
- -c --ciphertext ciphertext
-        Specify the ciphertext to work with. Use when -x is used.
- -k --key key
-        Specify the key to use. Needed, if -s is used with -e/-x mode
- -f --file file-path
-        Use local file for input. Works on most functions.
- -u --url url
-        cURL the contents of the URL for input. Please ensure url starts with 'http://'.
- -i --input input-string
-        Specify the string on which to work on.
- -d --hash
-        Hash the input specified by -i and print the digest.
- -n --number n
-        Output a digest of length n (for -d).
- -r --rounds rounds
-        Number of times to run input through the function (for -d)
- -q --quiet
-        Less verbose output. Ideal for I/O redirection. Works on all functions.
+
+#### Options
+
+Let's start by viewing all the supported arguments.
+
+```shell
+$ ./memecrypt.py --help
+[+] Usage: ./memecrypt.py [options]
+
+[i] Examples:
+
+     ./memecrypt.py -se -i foo -k bar
+
+     ./memecrypt.py --subs -x -f file.txt -k "super secret"
+
+     ./memecrypt.py -sx -c Ciphertext -k key
+
+     ./memecrypt.py --subs -e -u cat.thatlinuxbox.com -k lolcat
+
+[i] Positional arguments:
+
+       -s --subs
+              Select the substitution cipher.
+       -e --encrypt
+              Select encryption mode.
+       -x --decrypt
+              Select decryption mode.
+       -k --key key
+              Specify the key to use.
+       -i --input input-string
+              Specify a string to encrypt/decrypt.
+       -u --url url
+              Fetch the plaintext/ciphertext from the url.
+       -f --file file-path
+              Use local file for encrypting/decrypting.
+
+[i] Optional arguments:
+
+       -h --help
+              Show this help screen and exit.
+       -v --version
+              Print version information and exit.
+       -q --quiet
+              Only show output. Any errors are still displayed.
+       -o --output-file file
+              Specify a file to output to.
 ```
-# Examples
-The help screen may be quite confusing, however this tool is very easy to use once you have tried it out on a couple of times. Here are a few examples of how the arguments can be used.
-### Substitution Cipher
-Let's check out how we can use the subsititution cipher to encrypt and decrypt data.
-```bash
- $ ./memecrypt.py -s -e -i "Input string" -k "The key"
+
+#### Encryption
+
+Encrypt a message, taking input as an; argument, url
+or file, respectively. In each example, different
+representations of arguments may have been used or more
+options may have been added to display potential permutations.
+
+```shell
+
+# As an argument
+$ ./memecrypt.py -se -i "foo bar" -k "lorem ipsum"
 [!] Note: Please use the same key for decryption.
-[+] Encrypted result: dzFcXiYtcnEiKyxTezFcIQ==
+[+] Encrypted result:
+---------------------
+MHFGL1AjdjpSXXx8
 
-$ ./memecrypt.py -s -x -c "dzFcXiYtcnEiKyxTezFcIQ==" -k "The key"
-[+] Decrypted result: Input string
-
-$ ./memecrypt.py -s -e -u "http://cat.thatlinuxbox.com" -k "A cat has 10 lives"
-[+] Successfully fetched data from url.
+# From a URL
+$ ./memecrypt.py --subs --encrypt --url cat.thatlinuxbox.com --key "cat"
+[+] Fetched data from URL.
 [!] Note: Please use the same key for decryption.
-[+] Encrypted result: YEpXWmBKV1pgdlc2WnZm9TYXpvJWFCb3Judjdd.......(and so on)...
+[+] Encrypted result:
+---------------------
+WiJeTFoiXkxaOl5ETDpeREw6XkRMOl5ET.....(and so on).....
 
-$ ./memecrypt.py -s -e -u "http://cat.thatlinuxbox.com" -k "A cat has 10 lives" -q > ascii_cat
-
-$ ls
-ascii_cat
-
-$ ./memecrypt.py -s -x -f "./ascii_cat" -k "A cat has 10 lives"
-[+] Successfully read 1548 characters from file.
-[+] Decrypted result: 
-**********************************************************
-
-                     IM IN YUR COMPUTERZ...
-
-               .__....._             _.....__,
-                 .": o :':         ;': o :".
-                 `. `-' .'.       .'. `-' .'   
-                   `---'             `---'  
-
-         _...----...      ...   ...      ...----..._
-      .-'__..-""'----    `.  `"`  .'    ----'""-..__`-.
-     '.-'   _.--"""'       `-._.-'       '"""--._   `-.`
-     '  .-"'                  :                  `"-.  `
-       '   `.              _.'"'._              .'   `
-             `.       ,.-'"       "'-.,       .'
-               `.                           .'
-          jgs    `-._                   _.-'
-                     `"'--...___...--'"`
-
-                     WATCHIN YUR SCREENZ        
-
-**********************************************************
-
-$  ./memecrypt.py -s -x -f "./ascii_cat" -k "A cat has 9 lives"
-[+] Successfully read 1548 characters from file.
-[-] Invalid characters found, please check key or message.
-```
-The `-s` flag specifies that we are selecting the substitution cipher, `-e` puts it in encrypt mode and `-x` puts it in decrypt mode. `-i` is used in encrypt mode to specify the plaintext and `-c` is used in decrypt mode to specify the cipher text. Regardless of mode the `-u` flag will get the data from the url before encrypting/decrypting it. Similarly, irrespective of mode, the `-f` argument will read a file and encrypt/decrypt data from it. The key needs to be specified with `-k` in all cases. When encrypted, the output will be in base64.
-
-In the first example, we are `encrypting` a string and then `decrypting` it. In the third and fourth examples we are getting data from a URL with `-u` and in the fourth example in particular, we are specifying that we only want the encrypted text with `-q`, which we are redirecting it to a file called `ascii_cat`. In the second-last example we are decrypting the contents of the `ascii_cat` file by specifying `-f`. Please note, that Memecrypt cannot encrypt/decrypt binary data yet. An update will address this issue down the line.
-### Hash function
-This example below shows how to hash a string.
-```bash
-$ ./memecrypt.py -d -i "String to be hashed" -r 32 -n 64
-
-[+] Hash: EA63C2Cd18faAaBaC13478fB8cCf84fAB779CDfd703A35DFf49Ff3949acCE48a
-[~] Rounds: 32
-[~] Length: 64
-[~] Input: String to be hashed
-[i] Hash computed in 0.0059 seconds.
+# From a local file
+$ ./memecrypt.py -se -f <file-path> -k "foobar" -q
+NWl8eSlMd35ZXTQxU289Y0ZdNGdGTCdrU2FBQ3pM...(and so on)...
 
 ```
-In this example above, we specify that we want to use the hashing algorithm with `-d`, the input string with `-i`, the number of rounds we wish to run it through the hash function with `-r` and the number of output characters with `-n 64`. The arguments can be in any order with any one taking precedence over the other. For the hash function the `-r` and the `-n` arguments are optional, they can be omitted to specify defaults of `1` and `32` respectively. Finally we could have added the `-q` argument to only print the output hash.
-```bash
-$ ./memecrypt.py -d -i "String to be hashed" -r 32 -n 64 -q
-EA63C2Cd18faAaBaC13478fB8cCf84fAB779CDfd703A35DFf49Ff3949acCE48a
-```
-# Strength
-This algorithm should be strong enough to keep out casual reposters. However any determined meme-stealer/cryptanalyst may be able to break this algorithm in less than 5 minutes. In such case, I recommend that you use a real encryption algorithm like `AES`.
 
-<img src="https://bit.ly/2v1xJSn" width="500px" height="500px">
+#### Decryption
+
+Decrypt a message, again using argument, and local file
+respectively. An URL can also be used here, but I didn't
+have the time to host a memecrypt encrypted text page.
+
+```shell
+
+# Decrypt as an argument.
+./memecrypt.py -sx -i bVQ0cjJfVkY1TGNCKFRWWzIkZVF... -k wow
+[+] Decrypted result:
+---------------------
+Much encryption, very wow
+
+# Decrypt from file
+$ ./memecrypt.py --subs --decrypt -f ../../projects/outputfile -k lol
+[+] Decrypted result:
+---------------------
+Cupcake ipsum dolor. Sit amet topping chocolate bar
+
+```
+
+#### Notes
+
+**Arguments can be used in any order, any form and
+arguments can be combined, as long as they don't need
+a passed value.** A bit like how you would use `ls -al`.
+
+There are more options and ways you can use them.
+Please see the help screen for info on the options.
+
+This is just my implementation of memecrypt and you are welcome
+to create your own, or improve upon the algorithm.
+
+To create this, I used [Easyparse](https://github.com/Sh3llcod3/Easyparse),
+which is a user-friendly, lightweight argument parser that I wrote.
+
+
+## Module usage
+
+To use Memecrypt as a python3 module, we'll need to install this
+from PyPi using [pip3](https://pip.pypa.io/en/stable/).
+Simply run `python3 -m pip install memecrypt` to install the
+module.
+
+#### Initialising
+
+Let's start by creating an instance of the `meme_cipher` class.
+
+```Python
+# Import our module
+import memecrypt
+
+# Create an instance
+cipher = memecrypt.meme_cipher(message=None, enc_key=None, show_colors=True)
+
+# message is the message to work on
+# enc_key is the key
+# show_colors=False to turn off all colors
+
+# message, enc_key, show_colors are optional.
+# You could simply just do:
+cipher = memecrypt.meme_cipher()
+
+```
+
+#### Setting a message
+
+Once you have created an instance of the `meme_cipher` class,
+you can set the message at any time, by calling
+the method shown below. The message cannot be blank or `None`.
+You don't have to use this method for setting the message,
+you can simply set the `<object>.message` attribute too.
+The method is there for simplicity reasons.
+
+```Python
+# Using our previous instance
+cipher.set_message("foo")
+
+# We can access/modify this by accessing the message attribute
+print(cipher.message)
+# Prints: foo
+
+# Let's try and set a blank message.
+cipher.set_message(None)
+# Prints: [!] Memecrypt: Plaintext/Ciphertext cannot be empty.
+
+```
+
+#### Setting a key
+
+This works the same way as setting a message. As usual, we'll use
+our `cipher` instance. Again, the key cannot be blank or `None`.
+Similar to before, you can set the key by modifying the `enc_key` attribute.
+
+```Python
+# Setting a key
+cipher.set_key("bar")
+
+# We can access/modify the key from the enc_key attribute
+print(cipher.enc_key)
+# Prints: bar
+
+# Same as before, we can't set a blank key
+cipher.set_key('')
+# Prints: [!] Memecrypt: Key value cannot be empty.
+
+```
+
+#### Encrypting
+
+Once we have set a key and a message, we can encrypt them.
+This will return the result. If the key or message is missing,
+it will display an error.
+
+```Python
+# message => foo, key => bar
+cipher.encrypt()
+# Returns: 'NEgydQ=='
+
+```
+
+#### Decrypting
+
+Decrypting is a similar process to encrypting. A valid non-empty
+key and message is needed, and errors are displayed if any are not
+present.
+
+```Python
+# message => NEgydQ==, key=> bar
+cipher.decrypt()
+# Returns: 'foo'
+
+```
+
+#### Input sources
+
+If we wanted, we could also get our message/key text from a local file
+or an URL. You don't have to use this of course, you could implement your
+own file handing using `with` blocks or get the contents from a url using
+requests, urllib3, aiohttp or any module you want. It's simply there for
+convenience purposes, but chances are you can do it better.
+
+```Python
+# transfer the contents of the url.
+cat = cipher.fetch_url("cat.thatlinuxbox.com")
+# Returns a ascii cat.
+cipher.set_message(cat)
+# We just set our message as the ascii cat!
+
+# Read a local file.
+foo_file = cipher.read_file("/path/to/file/file.txt")
+# foo_file will have contents of file.txt
+
+# Set our message to contents of file.txt
+cipher.set_message(foo_file)
+
+```
+
+#### Ouput files
+
+If you want to write the output to a file, you can simply do:
+
+```Python
+# Append to a file. Create file if file nonexistent.
+cipher.write_to("path/to/file/file.txt", "lorem ipsum dolor")
+
+# Let's put our encrypted output to a file.
+cipher.write_to("foo_bar.txt", cipher.encrypt())
+```
+
+Like the input sources, you could write your own method of writing to
+a file.
+
+# Conclusion
+
+I would like to thank you for taking the time to read this.
+I hope it has been useful in explaining Memecrypt and how it
+can be used as a module or program. If you have any questions,
+please create an issue in GitHub, and I will try my best to respond
+to it, as long as its related to memecrypt and its use.
+
+Memecrypt is just one of my 'weekend projects'.
+You can view my other projects at my GitHub page,
+where I have built a Wireless network auditing
+script called [Airscript-ng](https://github.com/Sh3llcod3/Airscript-ng) with quite a few built-in tools,
+and [Easyparse](https://github.com/sh3llcod3/Easyparse) a lightweight, user-friendly argument parser.
+
+[GitHub Link](https://github.com/Sh3llcod3/Memecrypt)
+
+# To-do
+
+- [ ] Add support for binary files
+- [ ] Add other modes of operation
