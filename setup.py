@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="memecrypt",
-    version="1.1",
+    version="1.2",
     author="Sh3llcod3",
     author_email="no-reply@gmail.co.uk",
     description="An encryption tool, designed for recreational purposes.",
