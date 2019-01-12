@@ -259,10 +259,10 @@ def main():
 
     # Set up the arugment parser with the arguments.
     parser = easyparse.opt_parser()
-    parser.add_example("-se -i foo -k bar")
-    parser.add_example("--subs -x -f file.txt -k \"super secret\" ")
-    parser.add_example("-sx -c Ciphertext -k key")
-    parser.add_example("--subs -e -u cat.thatlinuxbox.com -k lolcat")
+    parser.add_example("memecrypt -se -i foo -k bar", str())
+    parser.add_example("memecrypt --subs -x -f file.txt -k \"super secret\" ", str())
+    parser.add_example("memecrypt -sx -c Ciphertext -k key", str())
+    parser.add_example("memecrypt --subs -e -u cat.thatlinuxbox.com -k lolcat", str())
     parser.add_arg(
         "-h",
         "--help",
@@ -340,6 +340,7 @@ def main():
 
     # View the help screen
     if parser.is_present("-h") or len(sys.argv) == 1:
+        parser.filename = "memecrypt"
         parser.show_help()
         cipher_instance.quit_program(0)
 

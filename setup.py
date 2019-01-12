@@ -21,5 +21,10 @@ setuptools.setup(
         "Topic :: Security :: Cryptography",
     ),
     install_requires=['easyparse'],
+    entry_points={
+        'console_scripts': [
+            'memecrypt=memecrypt:main',
+        ],
+    },
     python_requires='>=3',
 )

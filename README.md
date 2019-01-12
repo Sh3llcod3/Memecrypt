@@ -15,7 +15,7 @@ program, depending on which is required.
 
 # Prerequisites
 
-- A GNU/Linux based OS (Tested on: Ubuntu 16.04.4/Kali 2018.2)
+- A GNU/Linux based OS (Tested on: Ubuntu 18.04/Kali 2019.1)
 - Bash
 - Git
 - Python3 (pip3, requests)
@@ -28,12 +28,20 @@ and module usage is covered here.
 ## Program usage
 
 To use this as a program, start by cloning the repository from GitHub.
-Then mark the file as an executable.
+Then build the PyPi format package and install it.
 
 ```shell
 $ git clone https://github.com/Sh3llcod3/Memecrypt.git
-$ cd memecrypt/memecrypt/
-$ chmod +x memecrypt.py
+$ cd Memecrypt
+$ python3 -m pip install --user --upgrade setuptools wheel
+$ python3 setup.py sdist bdist_wheel
+$ cd dist/ && python3 -m pip install *.whl --user && cd .. && rm build/ dist/ memecrypt.egg-info/ -rf
+```
+
+Alternatively, you may install it direct from PyPi, ready for use.
+
+```shell
+$ python3 -m pip install memecrypt
 ```
 
 #### Options
@@ -41,18 +49,18 @@ $ chmod +x memecrypt.py
 Let's start by viewing all the supported arguments.
 
 ```shell
-$ ./memecrypt.py --help
-[+] Usage: ./memecrypt.py [options]
+$ memecrypt --help
+[+] Usage: memecrypt [options]
 
 [i] Examples:
 
-     ./memecrypt.py -se -i foo -k bar
+      memecrypt -se -i foo -k bar
 
-     ./memecrypt.py --subs -x -f file.txt -k "super secret"
+      memecrypt --subs -x -f file.txt -k "super secret"
 
-     ./memecrypt.py -sx -c Ciphertext -k key
+      memecrypt -sx -c Ciphertext -k key
 
-     ./memecrypt.py --subs -e -u cat.thatlinuxbox.com -k lolcat
+      memecrypt --subs -e -u cat.thatlinuxbox.com -k lolcat
 
 [i] Positional arguments:
 
@@ -272,12 +280,12 @@ cipher.set_message(foo_file)
 
 ```
 
-#### Ouput files
+#### Output files
 
 If you want to write the output to a file, you can simply do:
 
 ```Python
-# Append to a file. Create file if file nonexistent.
+# Append to a file. Create file if file non-existent.
 cipher.write_to("path/to/file/file.txt", "lorem ipsum dolor")
 
 # Let's put our encrypted output to a file.
@@ -306,4 +314,4 @@ and [Easyparse](https://github.com/sh3llcod3/Easyparse) a lightweight, user-frie
 # To-do
 
 - [ ] Add support for binary files
-- [ ] Add other modes of operation
+- [ ] Add other modes of operation (in progress)
