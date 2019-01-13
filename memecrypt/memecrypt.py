@@ -173,10 +173,6 @@ class meme_cipher(object):
         with open(file_path, "ab+") as open_file:
             open_file.write(utils.enc_utf(contents))
 
-    # Read input from STDIN
-    def read_pipe(self):
-        pass
-
     # Calulate the mapping for encrypting/decrypting
     def __derive_key_mapping(self):
         mapping_tracker = []
