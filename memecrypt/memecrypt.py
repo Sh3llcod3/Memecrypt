@@ -28,6 +28,8 @@ try:
     import time
     import requests
     import easyparse
+    import os
+    from stat import S_ISFIFO
 
     # Import custom modules
     from .terminal_colors import colors
@@ -170,6 +172,10 @@ class meme_cipher(object):
     def write_to(self, file_path, contents):
         with open(file_path, "ab+") as open_file:
             open_file.write(utils.enc_utf(contents))
+
+    # Read input from STDIN
+    def read_pipe(self):
+        pass
 
     # Calulate the mapping for encrypting/decrypting
     def __derive_key_mapping(self):
@@ -333,6 +339,13 @@ def main():
         "Specify a file to output to.",
         optional=True
         )
+    parser.add_arg(
+        "-p",
+        "--pipe-input",
+        None,
+        "Try to read message/ciphertext from pipe.",
+        optional=True
+        )
     parser.parse_args()
 
     # Create our instance of the meme_cipher class
@@ -346,7 +359,7 @@ def main():
 
     # Show version information.
     if parser.is_present("-v"):
-        print("Memecrypt Copyright (C) 2018 Yudhajit N.")
+        print("Memecrypt 1.3 Copyright (C) 2018 Yudhajit N.")
         print("License GPLv3+: GNU GPL version 3 "
               "or later <http://gnu.org/licenses/gpl.html>.")
         print("This is free software: "
@@ -360,7 +373,7 @@ def main():
         cipher_instance.set_quiet()
 
     # Determine the basic options
-    input_source = parser.check_multiple("-i","-u","-f", sep=True)
+    input_source = parser.check_multiple("-i","-u","-f", "-p", sep=True)
     if input_source[0]:
         cipher_instance.set_message(parser.value_of("-i"))
     if input_source[1]:
@@ -375,6 +388,11 @@ def main():
                 parser.value_of("-f")
             )
         )
+    if input_source[3] and S_ISFIFO(os.fstat(0).st_mode):
+        cipher_instance.set_message(
+            sys.stdin.read()
+        )
+
     if parser.is_present("-k"):
         cipher_instance.set_key(parser.value_of("-k"))
 
