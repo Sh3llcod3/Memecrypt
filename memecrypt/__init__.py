@@ -1,2 +1,2 @@
-name = "memecrypt"
 from .memecrypt import *
+name = "memecrypt"
