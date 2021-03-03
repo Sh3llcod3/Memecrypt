@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "memecrypt"
-version = "1.5.0"
+version = "1.5.1"
 description = "An encryption tool, designed for CTF challenges and fun purposes."
 authors = ["Sh3llcod3 <28938427+Sh3llcod3@users.noreply.github.com>"]
 license = "MIT"
