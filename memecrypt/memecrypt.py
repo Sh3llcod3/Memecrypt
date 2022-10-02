@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-#   Please note: this program isn't meant to be taken or used seriously,
-#   despite of how functional it may or may not be.
+#   Please note: this program isn't meant to be taken or used seriously, despite of how functional it may or may not be.
 
 try:
     import string
@@ -305,7 +304,7 @@ def main():
         cipher_instance.quit_program(0)
 
     if parser.is_present("-v"):
-        print("Memecrypt 1.5.0 Copyright (c) 2018-2020 Sh3llcod3")
+        print("Memecrypt 1.5.5 Copyright (c) 2018-2022 Sh3llcod3")
         cipher_instance.quit_program(0)
 
     if parser.is_present("-q"):
